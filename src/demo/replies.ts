@@ -34,11 +34,13 @@ export function skippedReply(): string {
 }
 
 export function continuationReply(s: StructuredThought): string {
-  const parts: string[] = [`Building on your plan for "${s.goal.text.toLowerCase()}":`];
+  const lc = (t: string) => t.charAt(0).toLowerCase() + t.slice(1);
+  const isQ = /^(should|what|how|which|is|can|do|does|why|where|when|who)\b/i.test(s.goal.text);
+  const parts: string[] = [isQ ? `Building on your thinking about "${s.goal.text}":` : `Building on your plan to ${lc(s.goal.text)}:`];
   if (s.ideas.length) parts.push(`• I'll keep your structure (${s.ideas.map((i) => i.text).join(', ')}) and go through it piece by piece.`);
-  if (s.approach.length) parts.push(`• Your approach (${s.approach.map((i) => i.text.toLowerCase()).join('; ')}) will be the starting point, and I'll flag anything that could trip you up.`);
-  if (s.constraints.length) parts.push(`• I'll stay within what you named: ${s.constraints.map((i) => i.text.toLowerCase()).join('; ')}.`);
-  if (s.openDecisions.length) parts.push(`• For "${s.openDecisions[0].text.toLowerCase()}", I'll set out the options and tradeoffs so you can make the call.`);
+  if (s.approach.length) parts.push(`• Your approach (${s.approach.map((i) => lc(i.text)).join('; ')}) will be the starting point, and I'll flag anything that could trip you up.`);
+  if (s.constraints.length) parts.push(`• I'll stay within what you named: ${s.constraints.map((i) => lc(i.text)).join('; ')}.`);
+  if (s.openDecisions.length) parts.push(`• For "${lc(s.openDecisions[0].text)}", I'll set out the options and tradeoffs so you can make the call.`);
   parts.push('This is what ChatGPT receives when you use the extension: your request with your own thinking as its foundation.');
   return parts.join('\n');
 }

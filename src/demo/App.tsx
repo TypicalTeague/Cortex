@@ -34,6 +34,7 @@ export function App() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [last, setLast] = useState<{ text: string; c: Classification } | null>(null);
+  const [sideOpen, setSideOpen] = useState(false);
   const [activity, setActivity] = useState<Activity>(EMPTY_ACTIVITY);
   const endRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -107,7 +108,7 @@ export function App() {
   const who = [profile.name, profile.careerDirection].filter(Boolean).join(' · ') || 'Default profile';
 
   return (
-    <div className="cx demo">
+    <div className={`cx demo${sideOpen ? ' side-open' : ''}`}>
       <header className="demo-top">
         <div className="demo-top-left">
           <Brand />
@@ -116,6 +117,9 @@ export function App() {
         <div className="demo-top-right">
           <button className="cx-btn cx-btn-outline demo-profile" onClick={() => setOnboarding(true)} data-testid="profile-chip" title="Edit profile">
             {who}
+          </button>
+          <button className="cx-btn cx-btn-ghost demo-side-toggle" onClick={() => setSideOpen(!sideOpen)} aria-expanded={sideOpen}>
+            {sideOpen ? 'Chat' : 'Details'}
           </button>
           <button className="cx-btn cx-btn-ghost" onClick={reset} data-testid="reset">
             Reset
@@ -196,13 +200,13 @@ export function App() {
           </div>
 
           <div className="demo-composer-wrap">
-            <div className="cx-chips demo-suggest" aria-label="Try these">
+            {!pendingCard && <div className="cx-chips demo-suggest" aria-label="Try these">
               {SUGGESTIONS.map((s) => (
                 <button key={s} className="cx-chip" onClick={() => send(s)} disabled={pendingCard}>
                   {s}
                 </button>
               ))}
-            </div>
+            </div>}
             <form
               className="demo-composer"
               onSubmit={(e) => {
@@ -216,7 +220,7 @@ export function App() {
                 className="demo-input"
                 aria-label="Message"
                 data-testid="composer"
-                placeholder={pendingCard ? 'Share a quick thought with Cortex above, or skip' : 'Message the demo assistant…'}
+                placeholder={pendingCard ? 'Answer Cortex above, or skip' : 'Message the demo assistant…'}
                 value={input}
                 disabled={pendingCard}
                 onChange={(e) => setInput(e.target.value)}
@@ -244,7 +248,7 @@ export function App() {
                 <span className={`side-kind ${last.c.kind}`}>{last.c.kind === 'routine' ? 'Routine' : 'Meaningful'}</span>
                 {last.c.domain && <span className="cx-tag">{last.c.domain}</span>}
                 <span className="cx-faint" style={{ marginLeft: 'auto' }}>
-                  confidence {Math.round(last.c.confidence * 100)}%
+                  rule match {Math.round(last.c.confidence * 100)}%
                 </span>
               </div>
               <p className="side-q">“{last.text}”</p>

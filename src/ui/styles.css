@@ -49,7 +49,7 @@
 }
 
 /* ---------- primitives ---------- */
-.cx button { font: inherit; color: inherit; cursor: pointer; }
+.cx :where(button) { font: inherit; color: inherit; cursor: pointer; }
 .cx :focus-visible { outline: 2px solid var(--cx-focus); outline-offset: 2px; border-radius: 8px; }
 
 .cx-btn {
@@ -76,7 +76,8 @@
   transition: border-color 0.15s, background 0.15s, color 0.15s;
 }
 .cx-chip:hover { border-color: var(--cx-ink-3); color: var(--cx-ink); }
-.cx-chip[aria-pressed='true'] { background: var(--cx-accent-soft); border-color: var(--cx-accent); color: var(--cx-ink); }
+.cx-chip[aria-pressed='true'] { background: var(--cx-accent-soft); border-color: var(--cx-accent); color: var(--cx-ink); font-weight: 600; }
+.cx-chip[aria-pressed='true']::before { content: '✓'; color: var(--cx-accent); font-weight: 700; }
 .cx-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .cx-input, .cx-textarea {
