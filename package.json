@@ -1,0 +1,33 @@
+{
+  "name": "cortex",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cortex — a thinking companion for ChatGPT. EmoryHacks 2026, Rogue Track.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:pages && npm run build:content && node scripts/verify-extension.mjs",
+    "build:pages": "vite build && CORTEX_TARGET=popup vite build",
+    "build:content": "vite build --config vite.content.config.ts",
+    "preview": "vite preview --outDir dist/demo --port 4173",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "e2e": "npm run build && playwright test"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/chrome": "^0.0.287",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8"
+  }
+}
