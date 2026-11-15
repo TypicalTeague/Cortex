@@ -12,7 +12,8 @@
     "preview": "vite preview --port 4173 --strictPort",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "e2e": "npm run build && playwright test"
+    "e2e": "npm run build && playwright test",
+    "package": "npm run build && cd dist/extension && rm -f ../../release/cortex-extension.zip && mkdir -p ../../release && zip -qr ../../release/cortex-extension.zip ."
   },
   "license": "MIT",
   "dependencies": {

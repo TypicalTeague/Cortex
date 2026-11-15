@@ -42,7 +42,7 @@ const ROUTINE_RULES: Rule[] = [
 
 const DELEGATION = /\b(write|complete|do|finish|solve|build|create|make|design|develop|draft|generate|code|implement|plan|analy[sz]e|debug|fix|outline|compose|prepare|come up with|brainstorm|figure out|decide|choose|structure|organi[sz]e|refactor|architect|research|rewrite|prove)\b/i;
 const OWN_WORK =
-  /\b(?:my|our|this|the|a)\s+(?:[\w-]+\s+){0,2}?(assignment|homework|essay|project|paper|code|codebase|program|app|application|website|site|thesis|report|presentation|cover letter|resume|résumé|cv|portfolio|dataset|data set|data|startup|business plan|business|lab report|problem set|pset|proposal|research|capstone|pitch|speech|personal statement|interview|strategy|function|script|query|study plan|plan|final|exam|midterm|notes|outline)\b/i;
+  /\b(?:my|our|this|the|a)\s+(?:[\w-]+\s+){0,2}?(assignment|homework|essay|project|paper|code|codebase|program|app|application|website|site|thesis|report|presentation|cover letter|resume|résumé|cv|portfolio|dataset|data set|data|startup|business plan|business|lab report|problem set|pset|proposal|research|capstone|pitch|speech|personal statement|interview|strategy|function|script|query|study plan|plan|final|exam|midterm|notes|outline|integral|equation|proof|derivation|problem|case study)\b/i;
 const HELP_ME = /\b(?:help me|can you|could you|i need (?:you )?to|i have to|i want to|i'm trying to|how (?:do|should|would) i)\b/i;
 const DECISION = /\b(?:should i|which is better|best way to|how should i approach|pros and cons|tradeoffs?|trade-offs?|whether (?:i|to)|what would you recommend)\b/i;
 
@@ -67,7 +67,7 @@ const DOMAIN_KEYWORDS: Record<Domain, [RegExp, number][]> = {
     [/\b(?:brainstorm|ideas?|name for|story|poem|haiku|lyrics|logo|slogan|creative|concept|novel|script for)\b/i, 1],
   ],
   learning: [
-    [/\b(?:homework|exam|study|studying|problem set|pset|lecture|midterm|final|prove|derive|understand|learn)\b/i, 1],
+    [/\b(?:homework|exam|study|studying|problem set|pset|lecture|midterm|final|prove|derive|understand|learn|integral|derivative|equation|theorem|proof)\b/i, 1],
   ],
 };
 

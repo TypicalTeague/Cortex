@@ -8,7 +8,7 @@ const you = (text: string): ThoughtItem => ({ text, source: 'you' });
 const cortex = (text: string): ThoughtItem => ({ text, source: 'cortex' });
 
 const LEAD_FILLER =
-  /^(?:and|so|also|then|but|or|plus|probably|maybe|perhaps|possibly|likely|i think|i guess|i feel like|i suppose|i'd|i’d|i would|i'll|i’ll|i will|i want to|i wanna|i'm going to|i’m going to|i'm gonna|i plan to|i'm thinking|i’m thinking|we'd|we would|we'll|let's|like|um|uh|honestly|basically|just|ideally|definitely|kind of|sort of|first(?:ly)?,?)\s+/i;
+  /^(?:and|so|also|then|but|or|plus|probably|maybe|perhaps|possibly|likely|i think|i guess|i feel like|i suppose|i'd|i’d|i would|i'll|i’ll|i will|i want to|i wanna|i'm going to|i’m going to|i'm gonna|i plan to|i'm thinking|i’m thinking|we'd|we would|we'll|let's|like|um|uh|honestly|basically|just|ideally|definitely|kind of|sort of|first(?:ly)?,?|my (?:hunch|guess|idea|thought|main point|point|plan) is(?: that)?|the (?:main )?point is(?: that)?|i (?:believe|suspect|bet|feel)(?: that)?)\s+/i;
 const TRAIL = /[\s,.;:!-]+$/;
 
 const UNCERTAIN =
@@ -16,7 +16,7 @@ const UNCERTAIN =
 const UNCERTAIN_SPLIT =
   /(?:i'?m |i am |still )?(?:not sure|unsure|don'?t know|do not know|no idea|wondering|haven'?t decided|can'?t decide|cannot decide|not certain|no clue|unclear(?: on| about)?)\s+(?:about\s+)?(how|whether|if|which|what|where|when|who|why)\s+(.+)/i;
 const CONSTRAINT =
-  /\b(?:deadline|due|by (?:monday|tuesday|wednesday|thursday|friday|saturday|sunday|tomorrow|tonight|next week|the end of)|must|has to|have to|need to|needs to|can'?t use|cannot use|not allowed|only have|limit|under \d+|at most|no more than|word count|\d+\s*(?:words|pages|minutes|slides))\b/i;
+  /\b(?:deadline|due|by (?:monday|tuesday|wednesday|thursday|friday|saturday|sunday|tomorrow|tonight|next week|the end of)|must|has to|have to|need to|needs to|can'?t use|cannot use|not allowed|only have|limit|under \d+|at most|no more than|word count|budget|\d+\s*(?:words|pages|minutes|slides))\b/i;
 const APPROACH =
   /\b(?:use|using|with|via|start(?:ing)? (?:with|by)|first|then|approach|method|try|go with|plan to|thinking of|leaning toward|look(?:ing)? at|compare|test|check|measure|filter|group|plot|build it|write it in|framework|library)\b/i;
 const IDEA_VERB =
@@ -48,7 +48,7 @@ function stripArticle(s: string): string {
 export function splitList(s: string): string[] {
   return s
     .split(/\s*,\s*(?:and\s+|or\s+)?|\s+and\s+|\s+or\s+|\s*\/\s*|\s+plus\s+/i)
-    .map((x) => cap(stripArticle(x.replace(TRAIL, ''))))
+    .map((x) => cap(stripArticle(clean(x))))
     .filter((x) => x.length > 0);
 }
 
@@ -56,7 +56,7 @@ export function splitList(s: string): string[] {
 export function goalFromRequest(request: string): string {
   let s = request.trim().replace(/[?!.\s]+$/, '');
   const polite =
-    /^(?:hey|hi|hello|ok|okay|please|so|chatgpt,?|can you|could you|would you|will you|i need you to|i want you to|help me(?: to)?|i need help(?: with)?|i need to|i want to|i have to|i'?m trying to|i would like to|i'd like to|please help me(?: to)?)\s+/i;
+    /^(?:hey|hi|hello|ok|okay|please|so|chatgpt,?|can you|could you|would you|will you|i need you to|i want you to|help me(?: to)?|i need help(?: with)?|i need to|i want to|i have to|i need|i want|give me|i'?m trying to|i would like to|i'd like to|please help me(?: to)?)\s+/i;
   let prev = '';
   while (prev !== s) {
     prev = s;
@@ -128,7 +128,7 @@ export function structureThought(request: string, thought: string, classificatio
 
     for (const clause of clauses) {
       if (UNCERTAIN.test(clause) || (isQuestion && clause === clauses[clauses.length - 1])) {
-        openDecisions.push(you(isQuestion && !UNCERTAIN.test(clause) ? clean(clause) + '?' : toDecision(clause, lastObject)));
+        openDecisions.push(you(isQuestion && !UNCERTAIN.test(clause) ? clean(clause).replace(/\?+$/, '') + '?' : toDecision(clause, lastObject)));
         continue;
       }
       if (CONSTRAINT.test(clause)) {
@@ -140,7 +140,7 @@ export function structureThought(request: string, thought: string, classificatio
       const hasVerb = afterVerb !== cleaned;
       const hasCommaList = /,/.test(afterVerb) && splitList(afterVerb).length >= 2;
       if (hasCommaList || (hasVerb && !APPROACH.test(cleaned) && splitList(afterVerb).length >= 2)) {
-        splitList(afterVerb).forEach((x) => ideas.push(you(x)));
+        splitList(afterVerb).forEach((x) => (CONSTRAINT.test(x) ? constraints : ideas).push(you(x)));
         continue;
       }
       if (APPROACH.test(clause)) {

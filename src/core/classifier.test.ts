@@ -32,6 +32,7 @@ describe('classifier (FR-1..FR-6)', () => {
     ['Debug my python function that keeps returning None', ['coding']],
     ['Help me brainstorm ideas for a short story', ['creative']],
     ['Make a study plan for my organic chemistry final', ['planning', 'learning']],
+    ['Solve this integral: x^2 dx', ['learning']],
   ])('AC-2 meaningful: %s', (q, domains) => {
     const c = classify(q as string);
     expect(c.kind).toBe('meaningful');

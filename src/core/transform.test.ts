@@ -71,3 +71,20 @@ describe('transform (FR-11..FR-14)', () => {
     expect(splitList('a homepage, project section, and resume section')).toEqual(['Homepage', 'Project section', 'Resume section']);
   });
 });
+
+describe('transform edge cases', () => {
+  it('routes list items that are constraints, strips hedges, avoids double ?', () => {
+    const s = structureThought('I need a marketing strategy for my bakery', 'instagram posts of our sourdough, a loyalty card, maybe partner with the coffee shop next door. budget is tiny');
+    expect(s.goal.text).toBe('A marketing strategy for my bakery');
+    expect(s.ideas.map((i) => i.text)).toContain('Partner with the coffee shop next door');
+    expect(s.constraints.map((i) => i.text)).toEqual(['Budget is tiny']);
+    const e = structureThought('Write my essay', 'carbon tax beats regulation. should I include counterarguments?');
+    expect(e.openDecisions[0].text).toBe('Should I include counterarguments?');
+  });
+
+  it('strips "my hunch is" so the hypothesis reads cleanly', () => {
+    const s = structureThought('Help me analyze this dataset', 'my hunch is sales dip in winter. I would group by month and plot it');
+    expect(s.ideas[0].text).toBe('Sales dip in winter');
+    expect(s.approach[0].text).toBe('Group by month and plot it');
+  });
+});
