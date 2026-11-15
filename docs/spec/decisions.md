@@ -22,7 +22,7 @@ Two small Vite builds (pages + IIFE content script) instead of WXT/CRXJS, to avo
 No network calls, telemetry, or remote code. Only the `storage` permission.
 
 ### ADR-8 Extension verified against a ChatGPT-shaped mock
-The build sandbox cannot reach chatgpt.com. The real built extension is loaded into Chromium and a mock page mirroring ChatGPT's composer (`#prompt-textarea` contenteditable, `data-testid="send-button"`) is served at `https://chatgpt.com` via Playwright routing. Live-site verification is a manual step in `docs/demo-script.md`.
+The build sandbox cannot reach chatgpt.com. The real built extension is loaded into Chromium and a mock page mirroring ChatGPT's composer (`#prompt-textarea` contenteditable, `data-testid="send-button"`) is served at `https://chatgpt.com` via Playwright routing. Live-site verification is a manual pre-demo check.
 
 ### ADR-9 Composer write strategy
 Writing into ChatGPT's ProseMirror editor: synthetic `paste` (ProseMirror handles it natively) → `execCommand('insertText')` → paragraph DOM + `input` event. If none succeed, the enriched prompt is copied to the clipboard and the user is told. Sending uses a one-shot bypass flag so Cortex never intercepts its own send.

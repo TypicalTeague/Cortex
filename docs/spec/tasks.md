@@ -30,7 +30,7 @@
 | T-11 | P0 | Popup (onboarding, pause) + manifest | FR-17, FR-22 | done |
 | T-12 | P0 | Playwright demo E2E | AC-1,4,6,7,8,9,11 | done |
 | T-13 | P0 | Extension build verification script | AC-10 | done |
-| T-14 | P0 | README, submission.md, demo-script.md | — | done |
+| T-14 | P0 | README and submission materials (submission materials kept private) | — | done |
 | T-15 | P1 | Local activity counts in popup + demo | FR-25 | done |
 | T-16 | P1 | GitHub Pages workflow for hosted demo | — | done (workflow; Pages must be enabled in repo settings) |
 | T-17 | P1 | Optional LLM-assisted transformation via backend | — | deferred (keeps zero-network guarantee for MVP) |
