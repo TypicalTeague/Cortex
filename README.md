@@ -4,7 +4,7 @@
 
 > Built for **EmoryHacks 2026 · Rogue Track**.
 
-- **Try the demo:** see [Run the demo](#run-the-standalone-demo) (a hosted copy deploys to GitHub Pages once Pages is enabled; see [Hosting](#hosting-the-demo)).
+- **Try the live demo:** https://typicalteague.github.io/Cortex/ (or [run it locally](#run-the-standalone-demo)).
 - **Install the extension:** [`release/cortex-extension.zip`](release/cortex-extension.zip), then follow the [steps below](#install-the-chrome-extension).
 
 ---
@@ -148,7 +148,7 @@ Requirement traceability: test names reference acceptance criteria (`AC-*`) from
 - English only.
 
 ## Hosting the demo
-`.github/workflows/pages.yml` builds and publishes `dist/demo` to GitHub Pages on every push to `main`. If the first run fails because Pages is disabled, enable it under **Settings → Pages → Source: GitHub Actions** and re-run the workflow.
+The demo is live at https://typicalteague.github.io/Cortex/. `.github/workflows/pages.yml` rebuilds and republishes it on every push to `main`.
 
 ## Roadmap
 - **Next:** optional model-assisted classification and phrasing via a small backend (keys server-side, deterministic fallback kept), smarter selector recovery, a richer activity history.
