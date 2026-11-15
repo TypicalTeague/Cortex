@@ -16,4 +16,5 @@ Each criterion is observable and mapped to requirements and tests.
 | AC-10 | `npm run build` produces `dist/extension` with manifest.json, content.js, popup.html. | FR-19 | build + `scripts/verify-extension.mjs` |
 | AC-11 | The demo runs end-to-end in a browser without network access to ChatGPT. | FR-23 | `demo.spec.ts` |
 | AC-12 | No intervention text contains a score, grade, or rating of the prompt. | FR-6 | `interventions.test.ts` |
-| AC-13 | Unknown ChatGPT DOM → content script does nothing and throws nothing. | FR-21, NFR-3 | `chatgpt-dom.test.ts` |
+| AC-13 | Unknown ChatGPT DOM → content script does nothing and throws nothing. | FR-21, NFR-3 | `extension.spec.ts` |
+| AC-14 | With the real extension loaded on a ChatGPT-shaped page: routine sends normally; meaningful shows the card; Continue sends the enriched prompt; Skip sends the original. | FR-19, FR-20 | `extension.spec.ts` |
