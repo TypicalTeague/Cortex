@@ -1,7 +1,7 @@
 # Cortex — Architecture Decision Records
 
 ### ADR-1 Repository
-The session's GitHub access was scoped to an existing public repo (`TypicalTeague/CognitiveLoad`), so Cortex was built there and the repo was then renamed to `TypicalTeague/cortex`. GitHub redirects the old URL.
+The session's GitHub access was scoped to an existing public repo (`TypicalTeague/CognitiveLoad`), so Cortex was built there and the repo was then renamed to `TypicalTeague/Cortex`. GitHub redirects the old URL.
 
 ### ADR-2 Rules-based classifier first
 Deterministic weighted rules (routine patterns vs. delegation verbs + domain keywords + length). Instant, free, private, explainable. Wrapped in a `Classifier` interface so a model-assisted classifier can be added (FR-5).
